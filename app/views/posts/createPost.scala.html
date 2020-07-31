@@ -1,0 +1,14 @@
+@(postForm: Form[Post])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@import views.html.helper._
+
+@main("create post"){
+    @form(routes.PostsController.feed(1)) {
+        <fieldset>
+            @CSRF.formField
+            @inputText(postForm("tittle"), Symbol("_label") -> "Title", Symbol("_help") -> "")
+            @textarea(postForm("content"), Symbol("_label") -> "Content", Symbol("_help") -> "")
+            @inputDate(postForm("date"), Symbol("_label") -> "Date", Symbol("_help") -> "")
+        </fieldset>
+            <input type="submit" value="Publish">
+    }
+}

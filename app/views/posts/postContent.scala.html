@@ -1,0 +1,11 @@
+@(post: Post)(implicit flash: Flash)
+
+@main("Content") {
+    <h1>@post.title</h1>
+    <p>@post.content</p>
+    @for(comment <- post.comments) {
+        <p>@post.comments</p>
+    }
+
+
+}

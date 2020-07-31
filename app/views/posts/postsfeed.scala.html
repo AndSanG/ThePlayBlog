@@ -1,0 +1,45 @@
+@import helper._
+
+@(posts: List[Post])(implicit flash : Flash)
+
+
+
+@main("PostFeed") {
+    <div id="actions">
+        <a class="btn success" id="add" href="@routes.PostsController.feed(1)">Date</a>
+        <a class="btn success" id="add" href="@routes.PostsController.feed(2)">Votes</a>
+        <a class="btn success" id="add" href="@routes.PostsController.create()">New Story</a>
+    </div>
+    <dl class="postsfeed">
+        <div class="row">
+            @for(post <- posts) {
+            <div class="col-sm-2">
+                <img class="img-thumbnail" alt="post" src="@routes.Assets.versioned("images/image_1.jpg")">
+            </div>
+            <div class="col-sm-10">
+                <dt><a href="@controllers.routes.PostsController.show(post.id)">@post.title</a></dt>
+                <dd>@post.content</dd>
+                <div class="row">
+                    <div class="col-sm-2">
+                        Like
+                    </div>
+                    <div class="col-sm-2">
+                        unlike
+                    </div>
+                    <div class="col-sm-2">
+                        Date
+                    </div>
+                    <div class="col-sm-2">
+                        Comment
+                    </div>
+                    <div class="col-sm-2">
+                        Category
+                    </div>
+                </div>
+            </div>
+            }
+
+        </div>
+
+    </dl>
+}
