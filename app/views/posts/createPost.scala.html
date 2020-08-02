@@ -2,16 +2,20 @@
 @import views.html.helper._
 @import models.Utils.DateUtil._
 @main("create post"){
-    @form(routes.PostsController.savePost) {
+
+    <div class="col-sm-12">
+        @form(routes.PostsController.savePost) {
         <fieldset>
             @CSRF.formField
-            @inputText(postForm("title"), Symbol("_label") -> "Title", Symbol("_help") -> "")
-            @textarea(postForm("content"), Symbol("_label") -> "Content", Symbol("_help") -> "")
+            @inputText(postForm("title"), Symbol("_label") -> "Title", Symbol("_help") -> "", 'size -> 80)
+            @textarea(postForm("content"), Symbol("_label") -> "Content", Symbol("_help") -> "",'rows -> 5, 'cols -> 80)
         </fieldset>
         <div>
             @date.format(DATE_FORMAT)
         </div>
+        <br>
+        <button class="btn btn-outline-primary">Publish</button>
+        }
+    </div>
 
-        <input type="submit" value="Publish">
-    }
 }

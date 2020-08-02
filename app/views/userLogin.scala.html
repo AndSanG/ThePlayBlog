@@ -1,4 +1,4 @@
-@(userForm: Form[models.User],postUrl: Call)(implicit request: MessagesRequestHeader)
+@(userForm: Form[models.User],postUrl: Call)(implicit flash: Flash, request: MessagesRequestHeader)
 @import helper._
 @main("Login") {
 <div id="content">
@@ -12,7 +12,7 @@
         @CSRF.formField
         @inputText(userForm("name"), '_label -> "Username", 'placeholder -> "username", 'id -> "username", 'size -> 40)
         @inputPassword(userForm("password"), '_label -> "Password", 'placeholder -> "password", 'id -> "password", 'size -> 40)
-        <button>Login</button>
+        <button class="btn btn-outline-primary">Login</button>
         }
     </div>
 

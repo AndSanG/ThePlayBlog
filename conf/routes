@@ -10,6 +10,8 @@ GET     /posts/new                  controllers.PostsController.create
 GET     /posts/:id                  controllers.PostsController.show(id: Int)
 POST    /post                       controllers.PostsController.savePost
 POST    /comment                    controllers.PostsController.createComment
+GET    /like                       controllers.PostsController.likePost(id: Int)
+GET    /dislike                    controllers.PostsController.dislikePost(id: Int)
 
 GET     /users/login                controllers.UserController.showLoginForm
 POST    /users/doLogin              controllers.UserController.processLoginAttempt

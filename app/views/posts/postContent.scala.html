@@ -2,39 +2,35 @@
 @import views.html.helper._
 @import models.UserSession._
 @import models.Utils.DateUtil._
+
 @main("Content") {
-    @* Flash shows updates to a page *@
-    @request.flash.data.map{ case (name, value) =>
-    <div>@name: @value</div>
-    }
+
     <h1>@post.title</h1>
     <p>@post.content</p>
     <span><i class="fa fa-calendar"></i> @post.date.format(DATE_FORMAT) &nbsp;</span>
     <br>
-    @if(SESSION_USERNAME_KEY){
-        <div class="btn-group">
-            <a href="#" class="btn btn-primary btn-sm">
-                <span class="fa fa-thumbs-up"></span> @post.likes
-            </a>
-            <a href="#" class="btn btn-info btn-sm">
-                <span class="fa fa-thumbs-down"></span> @post.dislikes
-            </a>
-        </div>
-    }else{
-        <div class="btn-group">
-            <a href="#" class="btn btn-primary btn-sm">
-                <span class="fa fa-thumbs-up"></span> @post.likes
-            </a>
-            <a href="#" class="btn btn-info btn-sm">
-                <span class="fa fa-thumbs-down"></span> @post.dislikes
-            </a>
-        </div>
-    }
 
+    <div class="btn-group">
+        <a href="@if(!SESSION_USERNAME_KEY){#}else{@controllers.routes.PostsController.likePost(post.id)}"
+           class="btn btn-outline-primary btn-sm @if(!SESSION_USERNAME_KEY){disabled}"
+           aria-disabled="@if(!SESSION_USERNAME_KEY){true}else{false}">
+            <span class="fa fa-thumbs-up"></span> @post.likes
+        </a>
+        <a href="@if(!SESSION_USERNAME_KEY){#}else{@controllers.routes.PostsController.dislikePost(post.id)}"
+           class="btn btn-outline-info btn-sm @if(!SESSION_USERNAME_KEY){disabled}"
+           aria-disabled="@if(!SESSION_USERNAME_KEY){true}else{false}">
+            <span class="fa fa-thumbs-down"></span> @post.dislikes
+        </a>
+    </div>
+    <br>
+    <br>
+    <h3>Responses</h3>
 
-    @for(comment <- post.comments) {
-        <p>@comment</p>
-    }
+    <ul class="list-group list-group-flush">
+        @for(comment <- post.comments) {
+        <li class="list-group-item">@comment</li>
+        }
+    </ul>
 
 
     @if(SESSION_USERNAME_KEY){

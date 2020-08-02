@@ -4,7 +4,7 @@
  * two arguments, a `String` for the title of the page and an `Html`
  * object to insert into the body of the page.
  *@
-@(title: String)(content: Html)
+@(title: String)(content: Html)(implicit flash: Flash)
 @import models.UserSession._
 <!DOCTYPE html>
 <html lang="en">
@@ -42,6 +42,16 @@
             </div>
         </nav>
 
+        @if(flash.get("success").isDefined){
+        <div class="alert alert-success">
+            @flash.get("success")
+        </div>
+        }
+        @if(flash.get("error").isDefined){
+        <div class="alert alert-error">
+            @flash.get("error")
+        </div>
+        }
 
         <div class="container">
             <div class="well">

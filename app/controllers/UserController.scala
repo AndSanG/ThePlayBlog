@@ -23,7 +23,9 @@ class UserController @Inject() (cc: MessagesControllerComponents,userValidation:
       val foundUser: Boolean = userValidation.lookupUser(user)
       if (foundUser) {
         UserSession.SESSION_USERNAME_KEY = user.name
+        val message = "Welcome " + user.name
         Redirect(routes.PostsController.feed(Preferences.ORDER))
+          .flashing("success" -> message)
       } else {
         Redirect(routes.UserController.showLoginForm)
           .flashing("error" -> "Invalid username/password.")
@@ -39,6 +41,7 @@ class UserController @Inject() (cc: MessagesControllerComponents,userValidation:
     Preferences.reset
     UserSession.logOut
     Redirect(routes.PostsController.feed(Preferences.ORDER))
+      .flashing("success" -> "Your are logged out")
   }
 
 

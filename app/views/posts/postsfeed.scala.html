@@ -12,7 +12,8 @@
     }
 }
 @header(orderBy: Int, title: String) = {
-    <a href="@routes.PostsController.feed(if(orderBy == ORDER){-orderBy}else{orderBy})" class="btn btn-primary btn-sm">
+    <a href="@routes.PostsController.feed(if(orderBy == ORDER){-orderBy}else{orderBy})"
+       class="btn btn-outline-primary btn-sm">
        @title
     </a>
 }
@@ -43,10 +44,11 @@
                 <div class="text text-2 pl-md-4">
                 <div class="meta-wrap">
                     <p class="meta">
+                        <span><i class="fa fa-user-circle"></i> @post.author &nbsp;</span>
                         <span><i class="fa fa-calendar"></i> @post.date.format(DATE_FORMAT) &nbsp;</span>
-                        <span><i class="fa fa-thumbs-up"></i> @post.likes &nbsp;</span>
-                        <span><i class="fa fa-thumbs-down"></i> @post.dislikes &nbsp;</span>
-                        <span><i class="fa fa-comments"></i> @post.comments.size &nbsp;</span>
+                        <span><i class="fa fa-thumbs-o-up"></i> @post.likes &nbsp;</span>
+                        <span><i class="fa fa-thumbs-o-down"></i> @post.dislikes &nbsp;</span>
+                        <span><i class="fa fa-comments-o"></i> @post.comments.size &nbsp;</span>
                     </p>
                 </div>
                 </div>
