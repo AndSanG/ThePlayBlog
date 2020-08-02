@@ -1,10 +1,52 @@
-@(post: Post)(implicit flash: Flash)
-
+@(post: Post, inComForm: Form[Comment])(implicit flash: Flash,request: MessagesRequestHeader)
+@import views.html.helper._
+@import models.UserSession._
+@import models.Utils.DateUtil._
 @main("Content") {
+    @* Flash shows updates to a page *@
+    @request.flash.data.map{ case (name, value) =>
+    <div>@name: @value</div>
+    }
     <h1>@post.title</h1>
     <p>@post.content</p>
+    <span><i class="fa fa-calendar"></i> @post.date.format(DATE_FORMAT) &nbsp;</span>
+    <br>
+    @if(SESSION_USERNAME_KEY){
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary btn-sm">
+                <span class="fa fa-thumbs-up"></span> @post.likes
+            </a>
+            <a href="#" class="btn btn-info btn-sm">
+                <span class="fa fa-thumbs-down"></span> @post.dislikes
+            </a>
+        </div>
+    }else{
+        <div class="btn-group">
+            <a href="#" class="btn btn-primary btn-sm">
+                <span class="fa fa-thumbs-up"></span> @post.likes
+            </a>
+            <a href="#" class="btn btn-info btn-sm">
+                <span class="fa fa-thumbs-down"></span> @post.dislikes
+            </a>
+        </div>
+    }
+
+
     @for(comment <- post.comments) {
-        <p>@post.comments</p>
+        <p>@comment</p>
+    }
+
+
+    @if(SESSION_USERNAME_KEY){
+    <div>
+        @form(routes.PostsController.createComment) {
+        @CSRF.formField
+        @inputText(inComForm("response"), Symbol("_label") -> "Response", Symbol("_help") -> "")
+        <button>Respond</button>
+        }
+    </div>
+    }else{
+        <a href="@controllers.routes.UserController.showLoginForm" class="nav-link">Login is necessary to comment and react</a>
     }
 
 

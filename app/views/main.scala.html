@@ -5,7 +5,7 @@
  * object to insert into the body of the page.
  *@
 @(title: String)(content: Html)
-
+@import models.UserSession._
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -14,28 +14,31 @@
 
 
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/blogicon.png")">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     </head>
     <body>
         @* And here's where we render the `Html` object containing
          * the page content. *@
-        <!--
-        <section id="top">
-            <a href="@controllers.routes.PostsController.feed(1)">
-                <div class="wrapper">
-                    <img class="resize" src="assets/images/blogicon.png" alt="logo" />
-                    <h1>The Play Blog</h1>
-                </div>
-            </a>
-        </section>
-       -->
 
         <nav class="navbar navbar-default">
-            <div class="wrapper">
+            <div>
                 <a href="@controllers.routes.PostsController.feed(1)" class="text-decoration-none">
                     <h1>The Play Blog</h1>
                 </a>
+            </div>
+                @if(SESSION_USERNAME_KEY){
+                <div class="btn-group">
+                    <a href="#" class="nav-link">@SESSION_USERNAME_KEY</a>
+                    |
+                    <a href="@controllers.routes.UserController.logOut" class="nav-link">Log Out</a>
+                </div>
+
+                }else{
+                    <a href="@controllers.routes.UserController.showLoginForm" class="nav-link">Login</a>
+                }
             </div>
         </nav>
 

@@ -1,14 +1,17 @@
-@(postForm: Form[Post])(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@(postForm: Form[PostData], date: String)(implicit flash: Flash,request: MessagesRequestHeader)
 @import views.html.helper._
-
+@import models.Utils.DateUtil._
 @main("create post"){
-    @form(routes.PostsController.feed(1)) {
+    @form(routes.PostsController.savePost) {
         <fieldset>
             @CSRF.formField
-            @inputText(postForm("tittle"), Symbol("_label") -> "Title", Symbol("_help") -> "")
+            @inputText(postForm("title"), Symbol("_label") -> "Title", Symbol("_help") -> "")
             @textarea(postForm("content"), Symbol("_label") -> "Content", Symbol("_help") -> "")
-            @inputDate(postForm("date"), Symbol("_label") -> "Date", Symbol("_help") -> "")
         </fieldset>
-            <input type="submit" value="Publish">
+        <div>
+            @date.format(DATE_FORMAT)
+        </div>
+
+        <input type="submit" value="Publish">
     }
 }

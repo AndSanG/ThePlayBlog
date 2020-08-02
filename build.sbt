@@ -12,6 +12,7 @@ scalaVersion := "2.13.3"
 libraryDependencies += guice
 libraryDependencies += "org.scalatestplus.play" %% "scalatestplus-play" % "5.0.0" % Test
 libraryDependencies +="com.adrianhurt" %% "play-bootstrap" % "1.6.1-P28-B4"
+libraryDependencies += "com.softwaremill.common" %% "id-generator" % "1.2.1"
 
 // Adds additional packages into Twirl
 //TwirlKeys.templateImports += "be.vub.controllers._"

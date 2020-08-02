@@ -1,0 +1,23 @@
+@(userForm: Form[models.User],postUrl: Call)(implicit request: MessagesRequestHeader)
+@import helper._
+@main("Login") {
+<div id="content">
+
+    <div id="user-login-form">
+
+        <h1>User Login</h1>
+
+        @form(postUrl, 'id -> "user-login-form") {
+
+        @CSRF.formField
+        @inputText(userForm("name"), '_label -> "Username", 'placeholder -> "username", 'id -> "username", 'size -> 40)
+        @inputPassword(userForm("password"), '_label -> "Password", 'placeholder -> "password", 'id -> "password", 'size -> 40)
+        <button>Login</button>
+        }
+    </div>
+
+</div>
+}
+
+
+

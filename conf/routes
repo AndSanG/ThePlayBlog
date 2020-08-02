@@ -5,9 +5,15 @@
 
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
-GET     /feed/:order                controllers.PostsController.feed(order: Int)
+GET     /feed                       controllers.PostsController.feed(s:Int ?= 1)
 GET     /posts/new                  controllers.PostsController.create
-GET     /posts/:id                  controllers.PostsController.show(id: Long)
+GET     /posts/:id                  controllers.PostsController.show(id: Int)
+POST    /post                       controllers.PostsController.savePost
+POST    /comment                    controllers.PostsController.createComment
+
+GET     /users/login                controllers.UserController.showLoginForm
+POST    /users/doLogin              controllers.UserController.processLoginAttempt
+GET     /users/logout               controllers.UserController.logOut
 
 
 # Map static resources from the /public folder to the /assets URL path

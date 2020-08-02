@@ -1,15 +1,35 @@
-@import helper._
-
 @(posts: List[Post])(implicit flash : Flash)
+@import helper._
+@import models.Utils.DateUtil._
+@import models.Preferences._
+@import models.UserSession._
 
-
+@order(orderBy: Int) ={
+    if(orderBy == scala.math.abs(ORDER)){
+    ORDER = -ORDER
+    }else{
+    orderBy
+    }
+}
+@header(orderBy: Int, title: String) = {
+    <a href="@routes.PostsController.feed(if(orderBy == ORDER){-orderBy}else{orderBy})" class="btn btn-primary btn-sm">
+       @title
+    </a>
+}
 
 @main("PostFeed") {
     <div id="actions">
-        <a class="btn success" id="add" href="@routes.PostsController.feed(1)">Date</a>
-        <a class="btn success" id="add" href="@routes.PostsController.feed(2)">Votes</a>
-        <a class="btn success" id="add" href="@routes.PostsController.create()">New Story</a>
+        @header(1,"Date")
+        @header(2,"Votes")
+        @if(SESSION_USERNAME_KEY){
+            <div class="float-sm-right">
+                <a href="@routes.PostsController.create()" class="btn btn-primary btn-sm">
+                    <span class="fa fa-pencil-square-o"></span> New Story
+                </a>
+            </div><br>
+        }
     </div>
+    <br>
     <dl class="postsfeed">
         <div class="row">
             @for(post <- posts) {
@@ -18,23 +38,17 @@
             </div>
             <div class="col-sm-10">
                 <dt><a href="@controllers.routes.PostsController.show(post.id)">@post.title</a></dt>
-                <dd>@post.content</dd>
-                <div class="row">
-                    <div class="col-sm-2">
-                        Like
-                    </div>
-                    <div class="col-sm-2">
-                        unlike
-                    </div>
-                    <div class="col-sm-2">
-                        Date
-                    </div>
-                    <div class="col-sm-2">
-                        Comment
-                    </div>
-                    <div class="col-sm-2">
-                        Category
-                    </div>
+                <dd>@if(post.content.size > 250){@post.content.substring(0,250)}else{@post.content}...
+                    <a href="@controllers.routes.PostsController.show(post.id)">Continue Reading</a></dd>
+                <div class="text text-2 pl-md-4">
+                <div class="meta-wrap">
+                    <p class="meta">
+                        <span><i class="fa fa-calendar"></i> @post.date.format(DATE_FORMAT) &nbsp;</span>
+                        <span><i class="fa fa-thumbs-up"></i> @post.likes &nbsp;</span>
+                        <span><i class="fa fa-thumbs-down"></i> @post.dislikes &nbsp;</span>
+                        <span><i class="fa fa-comments"></i> @post.comments.size &nbsp;</span>
+                    </p>
+                </div>
                 </div>
             </div>
             }
