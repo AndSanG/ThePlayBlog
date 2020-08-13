@@ -35,7 +35,7 @@
         <div class="row">
             @for(post <- posts) {
             <div class="col-sm-2">
-                <img class="img-thumbnail" alt="post" src="@routes.Assets.versioned("images/image_1.jpg")">
+                <img class="img-thumbnail" alt="Post" src="@routes.Assets.versioned("images/"+post.id+".jpg")">
             </div>
             <div class="col-sm-10">
                 <dt><a href="@controllers.routes.PostsController.show(post.id)">@post.title</a></dt>
